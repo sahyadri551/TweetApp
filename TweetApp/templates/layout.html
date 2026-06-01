@@ -1,0 +1,50 @@
+{% load static %}
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Tweet App
+        {% endblock %}
+    </title>
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'css/dist/styles.css' %}">
+</head>
+
+<body class="bg-slate-300 text-blue-800 min-h-screen">
+<header class="border-b border-slate-200 bg-white sticky top-0 z-50">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+
+        <a href="/tweet/" class="font-bold text-xl tracking-tight">
+            TweetApp
+        </a>
+
+        <div class="flex items-center gap-4">
+            <a href="#" class="text-sm text-slate-600 hover:text-black">
+                Explore
+            </a>
+
+            <a href="#" class="text-sm text-slate-600 hover:text-black">
+                Latest
+            </a>
+
+            <a href="#" class="rounded-lg bg-black text-white px-4 py-2 text-sm font-medium hover:bg-slate-800 transition">
+                Profile
+            </a>
+        </div>
+
+    </nav>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+</body>
+</html>

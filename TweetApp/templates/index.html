@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Home | Tweet App
+{% endblock %}
+
+{% block content %}
+
+<section class="max-w-6xl mx-auto px-6 py-16">
+
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+    <div>
+
+        <span class="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-sm font-medium">
+            Django + Tailwind Learning Project
+        </span>
+
+        <h1 class="mt-6 text-5xl md:text-6xl font-bold tracking-tight leading-tight">
+            Share short thoughts,
+            ideas and updates.
+        </h1>
+
+        <p class="mt-6 text-lg text-slate-600 max-w-xl">
+            A simple Twitter-inspired application built while learning
+            Django, authentication, forms, models, CRUD operations,
+            Tailwind CSS and deployment.
+        </p>
+
+        <div class="mt-8 flex flex-wrap gap-4">
+
+            <a href="{% url 'tweet_create' %}"
+               class="rounded-xl bg-black text-white px-6 py-3 font-medium hover:bg-slate-800 transition">
+                Create Tweet
+            </a>
+
+            <a href="#"
+               class="rounded-xl border border-slate-300 px-6 py-3 font-medium hover:bg-slate-100 transition">
+                Open Profile
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+
+        <div class="border-b border-slate-200 px-5 py-4">
+            <h3 class="font-semibold">
+                Recent Activity
+            </h3>
+        </div>
+
+        <div class="p-5 space-y-5">
+
+            <article class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-slate-300"></div>
+
+                <div>
+                    <p class="font-medium">Alex Johnson</p>
+                    <p class="text-slate-600">
+                        Just started building my TweetApp with Django.
+                    </p>
+                </div>
+            </article>
+
+            <article class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-slate-300"></div>
+
+                <div>
+                    <p class="font-medium">Sarah Lee</p>
+                    <p class="text-slate-600">
+                        Tailwind is finally working after fixing templates.
+                    </p>
+                </div>
+            </article>
+
+            <article class="flex gap-4">
+                <div class="w-10 h-10 rounded-full bg-slate-300"></div>
+
+                <div>
+                    <p class="font-medium">Michael Chen</p>
+                    <p class="text-slate-600">
+                        Next step: user authentication and posting tweets.
+                    </p>
+                </div>
+            </article>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+{% endblock %}
