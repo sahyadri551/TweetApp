@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto py-12">
+<div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+
+    <h1 class="text-3xl font-bold mb-2">
+        Create Account
+    </h1>
+
+    <p class="text-slate-500 mb-6">
+        Join the conversation.
+    </p>
+
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-black text-white py-3 rounded-xl hover:bg-slate-800">
+            Create Account
+        </button>
+    </form>
+    <p class="mt-6 text-sm text-center text-slate-500">
+        Already have an account?
+        <a href="{% url 'login' %}" class="text-blue-600">
+            Login
+        </a>
+    </p>
+</div>
+</div>
+
+{% endblock %}

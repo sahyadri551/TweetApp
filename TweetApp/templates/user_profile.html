@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ profile_user.username }}
+{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto px-6 py-10">
+<div class="bg-white rounded-2xl border border-slate-200 p-8">
+    <div class="flex items-center gap-6">
+        <div class="w-20 h-20 rounded-full bg-slate-300"></div>
+        <div>
+            <h1 class="text-3xl font-bold">
+                {{ profile_user.username }}
+            </h1>
+            <p class="text-slate-500">
+                Joined TweetApp
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="mt-8">
+    <h2 class="text-2xl font-bold mb-4">
+        Tweets
+    </h2>
+    {% for tweet in tweets %}
+        <article class="bg-white border border-slate-200 rounded-2xl p-5 mb-4">
+            <p>
+                {{ tweet.text }}
+            </p>
+            {% if tweet.image %}
+                <img src="{{ tweet.image.url }}"
+                    class="mt-4 rounded-xl max-h-64" alt="Tweet">
+            {% endif %}
+
+            <p class="text-sm text-slate-500 mt-4">
+                {{ tweet.created_at }}
+            </p>
+        </article>
+    {% empty %}
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            No tweets yet.
+        </div>
+    {% endfor %}
+</div>
+</section>
+{% endblock %}

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "crispy_tailwind",
     "Tweet",
+    "accounts",
 ]
 
 TAILWIND_APP_NAME = 'theme'
