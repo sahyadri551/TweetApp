@@ -22,8 +22,8 @@ def profile(request:HttpRequest)->HttpResponse:
     tweets = Tweet.objects.filter(
         user=request.user
     ).order_by("-created_at")
-
-    return render(request,"registration/profile.html", {"tweets": tweets, "profile": profile})
+    tweet_count = tweets.count()
+    return render(request,"registration/profile.html", {"tweets": tweets, "profile": profile, "tweet_count": tweet_count})
 
 @login_required
 def profile_edit(request:HttpRequest)->HttpResponse:

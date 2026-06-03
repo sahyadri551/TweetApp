@@ -1,5 +1,9 @@
 {% load static %}
 {% load tailwind_tags %}
+<script
+    defer
+    src="{% static 'js/main.js' %}"
+></script>
 
 <!DOCTYPE html>
 
@@ -26,19 +30,17 @@
     <div class="flex items-center gap-4">
 
         {% if request.user.is_authenticated %}
-
-            <a
-                href="{% url 'tweet_create' %}"
-                class="text-slate-600 hover:text-black"
-            >
-                Create
+            <a href="{% url 'tweet_create' %}" class="text-slate-600 hover:text-black">
+                Create Tweet
             </a>
-
-            <a
-                href="{% url 'profile' %}"
-                class="text-slate-600 hover:text-black"
-            >
-                Profile
+            {% if request.user.profile.avatar %}
+            <img src="{{ request.user.profile.avatar.url }}" alt="Avatar"
+                class="w-10 h-10 rounded-full object-cover border">
+            {% else %}
+            <div class="w-10 h-10 rounded-full bg-slate-300"></div>
+            {% endif %}     
+            <a href="{% url 'profile' %}">
+                {{ request.user.username }}
             </a>
             <form method="POST" action="{% url 'logout' %}">
                 {% csrf_token %}
@@ -67,4 +69,5 @@
 </main>
 
 </body>
+<script defer src="{% static 'js/main.js' %}"></script>
 </html>
