@@ -8,7 +8,12 @@ Profile
 
 <section class="max-w-5xl mx-auto px-6 py-10">
 <div class="bg-white rounded-2xl border border-slate-200 p-8">
-
+    {% if profile.avatar %}
+        <imgsrc="{{ profile.avatar.url }}"alt="Avatar"
+        class="w-32 h-32 rounded-full object-cover border">
+    {% else %}
+        <div class="w-32 h-32 rounded-full bg-slate-300"></div>
+    {% endif %}
     <h1 class="text-3xl font-bold">
         {{ request.user.username }}
     </h1>
@@ -16,7 +21,40 @@ Profile
     <p class="text-slate-500 mt-2">
         {{ request.user.email }}
     </p>
-
+    <p class="text-slate-500 mt-2">
+        Joined on {{ request.user.date_joined|date:"F j, Y" }}
+    </p>
+    {% if profile.nationality %}
+        <p>
+            Nationality: {{ profile.nationality }}
+        </p>
+    {% endif %}
+    {% if profile.profession %}
+    <p>
+        Profession: {{ profile.profession }}
+    </p>
+    {% endif %}
+    {% if profile.address %}
+    <p class="text-slate-500 mt-2">
+       Address: {{ profile.address }}
+    </p>
+    {% endif %}
+    {% if profile.url %}
+    <p class="text-slate-500 mt-2">
+        url: <a href="{{ profile.url }}" class="text-blue-600">
+        {{ profile.url }}
+    </p>
+    {% endif %}
+    {% if profile.mobile %}
+    <p class="text-slate-500 mt-2">
+        Mobile: {{ profile.mobile }}
+    </p>
+    {% endif %}
+    <p class="mt-5">
+    <a  href="{% url 'profile_edit' %}" class="bg-black text-white px-4 py-2 rounded-lg">
+        Edit Profile
+    </a>
+    </p>
 </div>
 
 <div class="mt-8">

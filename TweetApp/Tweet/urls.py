@@ -1,4 +1,3 @@
-from django import views
 from django.urls import path
 from .views import home, tweet_create, tweet_edit, tweet_delete, user_profile
 
