@@ -28,3 +28,11 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.user.username}: {self.text[:20]}"
     
+class Like(models.Model):
+    tweet = models.ForeignKey(Tweet,on_delete=models.CASCADE,related_name="likes")
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    class Meta:
+        unique_together = ("tweet", "user")
+    def __str__(self):
+        return f"{self.user.username} likes Tweet {self.tweet.id}" # type: ignore
+    
