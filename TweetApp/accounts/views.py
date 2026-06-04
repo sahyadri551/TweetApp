@@ -1,10 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .forms import UserRegisterForm
 from django.http import HttpResponse,HttpRequest
 from django.contrib.auth.decorators import login_required
 from Tweet.models import Tweet
 from .forms import ProfileForm
+from django.contrib.auth.models import User
 
+from .models import Follow
 
 def register(request:HttpRequest)->HttpResponse: 
     if request.method == "POST": 
@@ -36,3 +38,16 @@ def profile_edit(request:HttpRequest)->HttpResponse:
     else:
         form = ProfileForm(instance=profile) # type: ignore
     return render( request,"registration/profile_edit.html",{"form": form})
+
+@login_required
+def toggle_follow(request:HttpRequest, username:str)->HttpResponse:
+    target_user = get_object_or_404(User,username=username)
+    if target_user == request.user:
+        return redirect("user_profile",username=username)
+    follow = Follow.objects.filter(follower=request.user,following=target_user)
+    if follow.exists():
+        follow.delete()
+    else:
+        Follow.objects.create(follower=request.user,following=target_user)
+
+    return redirect("user_profile",username=username)

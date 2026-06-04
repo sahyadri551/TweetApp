@@ -3,7 +3,7 @@ from django.http import HttpResponse,HttpRequest
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
+from accounts.models import Follow
 from .forms import CommentForm, TweetForm
 from .models import Tweet, Comment, Like
 
@@ -49,8 +49,14 @@ def user_profile(request: HttpRequest, username: str) -> HttpResponse:
     profile_user = get_object_or_404(User,username=username)
     tweets = Tweet.objects.filter(user=profile_user).order_by("-created_at")
     tweet_count = tweets.count()
+    is_following = False
+    if request.user.is_authenticated:
+        is_following = Follow.objects.filter(follower=request.user,following=profile_user).exists()
+    followers_count = Follow.objects.filter(following=profile_user).count()
+    following_count = Follow.objects.filter(follower=profile_user).count()
     return render(request,"user_profile.html",
-            {"profile_user": profile_user,"tweets": tweets,"tweet_count": tweet_count,})
+            {"profile_user": profile_user,"tweets": tweets,"tweet_count": tweet_count,
+             "followers_count": followers_count,"following_count": following_count,"is_following": is_following,})
 
 @login_required
 def comment_create(request: HttpRequest, tweet_id: int) -> HttpResponse:

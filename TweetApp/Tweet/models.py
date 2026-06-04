@@ -35,4 +35,3 @@ class Like(models.Model):
         unique_together = ("tweet", "user")
     def __str__(self):
         return f"{self.user.username} likes Tweet {self.tweet.id}" # type: ignore
-    

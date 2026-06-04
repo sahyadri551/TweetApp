@@ -36,22 +36,47 @@
                 {% endif %}
             </div>
         </div>
+        {% if request.user.is_authenticated and request.user != profile_user %}
+        <div class="bg-slate-100 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold">
+                {% if is_following %}
+                <p class="text-sm text-slate-500 mt-2">
+                    Joined {{ profile_user.date_joined|date:"F Y" }}
+                </p>
+                {% endif %}
+            </div>
+            <div class="text-sm text-slate-500">
+                {% if request.user.is_authenticated and request.user != profile_user %}
+                <form method="POST" action="{% url 'toggle_follow' profile_user.username %}">
+                    {% csrf_token %}
+                    <button type="submit">
+                        {% if is_following %}
+                            Following
+                        {% else %}
+                            Follow
+                        {% endif %}
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
     </div>
-
-<div class="grid grid-cols-3 gap-4 mt-6">
+</div>
+<div class="grid grid-cols-3 gap-2 mt-6">
     <div class="bg-slate-100 rounded-xl p-4 text-center">
         <div class="text-2xl font-bold"> {{ tweet_count }} </div>
         <div class="text-sm text-slate-500"> Tweets </div>
     </div>
 
     <div class="bg-slate-100 rounded-xl p-4 text-center">
-        <div class="text-2xl font-bold"> 0 </div>
+        <div class="text-2xl font-bold"> {{ followers_count }} </div>
         <div class="text-sm text-slate-500"> Followers </div>
     </div>
 
     <div class="bg-slate-100 rounded-xl p-4 text-center">
         <div class="text-2xl font-bold">
-            0
+            {{ following_count }}
         </div>
         <div class="text-sm text-slate-500">
             Following
@@ -61,35 +86,21 @@
 </div>
 
     <div class="mt-8">
-
         <h2 class="text-2xl font-bold mb-4">
             Tweets
         </h2>
-
         {% for tweet in tweets %}
-
             <article class="bg-white rounded-2xl border border-slate-200 p-5 mb-4">
-
                 <p>{{ tweet.text }}</p>
-
                 {% if tweet.image %}
                     <img src="{{ tweet.image.url }}" class="mt-4 rounded-xl max-h-80" alt="Tweet">
                 {% endif %}
-
             </article>
-
         {% empty %}
-
             <div class="bg-white rounded-2xl border border-slate-200 p-6">
-
                 No tweets yet.
-
             </div>
-
         {% endfor %}
-
     </div>
-
 </section>
-
 {% endblock %}
