@@ -27,8 +27,13 @@ DEBUG = config("DEBUG", default=False, cast=bool) # type: ignore
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "tweetapp-production-0c19.up.railway.app",
+]
 
+SECURE_PROXY_SSL_HEADER = (
+    ("HTTP_X_FORWARDED_PROTO", "https")
+)
 
 # Application definition
 
@@ -157,3 +162,7 @@ STATICFILES_STORAGE = (
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://tweetapp-production-0c19.up.railway.app",
+]
