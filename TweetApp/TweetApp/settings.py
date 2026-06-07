@@ -32,7 +32,8 @@ ALLOWED_HOSTS = [
 ]
 
 SECURE_PROXY_SSL_HEADER = (
-    ("HTTP_X_FORWARDED_PROTO", "https")
+    "HTTP_X_FORWARDED_PROTO",
+    "https",
 )
 
 # Application definition
@@ -151,9 +152,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"),
+# ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = (
