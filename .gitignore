@@ -1,1 +1,6 @@
 TweetApp/.env
+.env
+TweetApp/db.sqlite3
+TweetApp/media/
+TweetApp/__pycache__/
+TweetApp/*.pyc
