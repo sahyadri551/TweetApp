@@ -42,7 +42,19 @@ Home | Tweet App
         </div>
         <div class="p-5">
             {% if tweets %}
-                <div class="space-y-4">                
+                <div class="space-y-4">
+                    <div class="flex justify-center mb-8">                    
+                        <div class="bg-white rounded-xl border border-slate-200 p-1 flex">
+                            <a href="?feed=following" class=" px-6 py-2 rounded-lg
+                                {% if feed_type != 'explore' %} bg-slate-900 text-white{% endif %}">
+                                Following
+                            </a>
+                            <a href="?feed=explore" class=" px-6 py-2 rounded-lg
+                                {% if feed_type == 'explore' %} bg-slate-900 text-white {% endif %} ">
+                                Explore
+                            </a>
+                        </div>
+                    </div>             
                     {% for tweet in tweets %}                
                         <article x-data="{ open: false }" class="border border-slate-200 rounded-2xl p-4">                       
                             <div class="flex items-center justify-between">                           

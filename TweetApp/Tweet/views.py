@@ -8,11 +8,20 @@ from .forms import CommentForm, TweetForm
 from .models import Tweet, Comment, Like
 
 def home(request:HttpRequest) -> HttpResponse:
-    tweets = Tweet.objects.all().order_by("-created_at")
+    feed_type = request.GET.get("feed","following")
     if request.user.is_authenticated:
-        for tweet in tweets:
-            tweet.user_liked = Like.objects.filter(tweet=tweet,user=request.user).exists() # type: ignore
-    return render(request, "index.html", {"tweets": tweets})
+        if feed_type == "explore":
+            tweets = Tweet.objects.all()
+        else:
+            following_users = list(Follow.objects.filter(follower=request.user)
+                               .values_list( "following",flat=True ))
+            following_users.append(request.user.id) # type: ignore
+            tweets = Tweet.objects.filter(user__in=following_users).order_by("-created_at")
+            for tweet in tweets:
+                tweet.user_liked = Like.objects.filter(tweet=tweet,user=request.user).exists() # type: ignore
+    else:
+        tweets = Tweet.objects.all().order_by("-created_at")
+    return render(request, "index.html", {"tweets": tweets, "feed_type": feed_type,})
 
 @login_required
 def tweet_create(request: HttpRequest) -> HttpResponse:

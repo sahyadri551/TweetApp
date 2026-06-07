@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from Tweet.models import Tweet
 from .forms import ProfileForm
 from django.contrib.auth.models import User
-
 from .models import Follow
 
 def register(request:HttpRequest)->HttpResponse: 
@@ -51,3 +50,13 @@ def toggle_follow(request:HttpRequest, username:str)->HttpResponse:
         Follow.objects.create(follower=request.user,following=target_user)
 
     return redirect("user_profile",username=username)
+
+def followers_list(request:HttpRequest, username:str)->HttpResponse:
+    profile_user = get_object_or_404(User,username=username)
+    followers = Follow.objects.filter(following=profile_user).select_related("follower")
+    return render(request,"followers_list.html",{"profile_user": profile_user, "followers": followers,})
+
+def following_list(request:HttpRequest, username:str)->HttpResponse:
+    profile_user = get_object_or_404(User,username=username)
+    following = Follow.objects.filter(follower=profile_user).select_related("following")
+    return render(request,"following_list.html",{"profile_user": profile_user,"following": following,})
