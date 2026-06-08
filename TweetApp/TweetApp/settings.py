@@ -14,6 +14,9 @@ from pathlib import Path
 from decouple import config
 import os
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +32,8 @@ DEBUG = config("DEBUG", default=False, cast=bool) # type: ignore
 
 ALLOWED_HOSTS = [
     "tweetapp-production-0c19.up.railway.app",
+    "127.0.0.1",
+    "localhost",
 ]
 
 SECURE_PROXY_SSL_HEADER = (
@@ -52,6 +57,8 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "Tweet",
     "accounts",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -59,6 +66,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 if DEBUG:
     NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
@@ -99,16 +107,6 @@ WSGI_APPLICATION = "TweetApp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# DATABASES = { # type: ignore
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": config("DB_NAME"),
-#         "USER": config("DB_USER"),
-#         "PASSWORD": config("DB_PASSWORD"),
-#         "HOST": config("DB_HOST"),
-#         "PORT": config("DB_PORT"),
-#     }
-# }
 
 DATABASES = {
     "default": dj_database_url.config(
@@ -159,16 +157,32 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+DEFAULT_FILE_STORAGE = (
+    "cloudinary_storage.storage.MediaCloudinaryStorage"
+)
 
 CSRF_TRUSTED_ORIGINS = [
     "https://tweetapp-production-0c19.up.railway.app",
 ]
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": config("CLOUDINARY_API_KEY"),
+    "API_SECRET": config("CLOUDINARY_API_SECRET"),
+}
+
+cloudinary.config( # type: ignore
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+    secure=True,
+)
