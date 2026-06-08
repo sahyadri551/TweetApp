@@ -61,7 +61,9 @@ Profile
         </div>
         <div class="bg-slate-100 rounded-xl p-4 text-center">
             <div class="text-2xl font-bold">
-                0
+                <a href="{% url 'followers_list' request.user.username %}">
+                    {{ followers_count }}
+                </a>
             </div>
             <div class="text-sm text-slate-500">
                 Followers
@@ -69,7 +71,9 @@ Profile
         </div>
         <div class="bg-slate-100 rounded-xl p-4 text-center">
             <div class="text-2xl font-bold">
-                0
+                <a href="{% url 'following_list' request.user.username %}">
+                    {{ following_count }}
+                </a>
             </div>
             <div class="text-sm text-slate-500">
                 Following

@@ -20,11 +20,13 @@ def register(request:HttpRequest)->HttpResponse:
 @login_required
 def profile(request:HttpRequest)->HttpResponse:
     profile = request.user.profile # type: ignore
-    tweets = Tweet.objects.filter(
-        user=request.user
-    ).order_by("-created_at")
+    tweets = Tweet.objects.filter( user=request.user).order_by("-created_at")
+    followers_count = Follow.objects.filter(following=request.user).count()
+    following_count = Follow.objects.filter(follower=request.user).count()
     tweet_count = tweets.count()
-    return render(request,"registration/Profile.html", {"tweets": tweets, "profile": profile, "tweet_count": tweet_count})
+    return render(request,"registration/Profile.html", {"tweets": tweets, 
+        "profile": profile, "tweet_count": tweet_count,
+        "followers_count": followers_count,"following_count": following_count,})
 
 @login_required
 def profile_edit(request:HttpRequest)->HttpResponse:
